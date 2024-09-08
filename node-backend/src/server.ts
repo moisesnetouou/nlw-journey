@@ -1,9 +1,24 @@
 import fastify from 'fastify';
+import { prisma } from './lib/prisma';
 
 const app = fastify();
 
-app.get('/test', () => {
-  return 'Hello World';
+app.get('/cadastrar', async () => {
+  await prisma.trip.create({
+    data: {
+      destination: 'Manaus',
+      starts_at: new Date(),
+      ends_at: new Date(),
+    },
+  });
+
+  return 'Registro cadastrado com sucesso!';
+});
+
+app.get('/listar', async () => {
+  const trip = await prisma.trip.findMany();
+
+  return trip;
 });
 
 app.listen({ port: 3333 }).then(() => {
