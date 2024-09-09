@@ -7,6 +7,7 @@ import { getMailClient } from '../lib/mail';
 import nodemailer from 'nodemailer';
 
 import { dayjs } from '../lib/dayjs';
+import { ClientError } from '../errors/client-error';
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -35,13 +36,13 @@ export async function createTrip(app: FastifyInstance) {
       } = request.body;
 
       if (dayjs(starts_at).isBefore(new Date())) {
-        throw new Error(
+        throw new ClientError(
           'Start date must be in the future - Invalid trip start date',
         );
       }
 
       if (dayjs(ends_at).isBefore(starts_at)) {
-        throw new Error(
+        throw new ClientError(
           'End date must be after start date - Invalid trip end date',
         );
       }
