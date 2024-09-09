@@ -1,8 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "dev": "tsx watch --env-file .env src/server.ts",
+    "start:dev": "tsx watch --env-file .env src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
     "generate-erd": "prisma generate"
   },
   "keywords": [],
@@ -22,6 +27,7 @@
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
     "prisma": "^5.19.1",
+    "tsup": "^8.2.4",
     "tsx": "^4.19.0",
     "typescript": "^5.5.4"
   },
