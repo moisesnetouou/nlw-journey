@@ -1,15 +1,12 @@
 import { FastifyInstance } from 'fastify';
 import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import z from 'zod';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import 'dayjs/locale/pt-br';
-import dayjs from 'dayjs';
+
 import { prisma } from '../lib/prisma';
 import { getMailClient } from '../lib/mail';
 import nodemailer from 'nodemailer';
 
-dayjs.locale('pt-br');
-dayjs.extend(localizedFormat);
+import { dayjs } from '../lib/dayjs';
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -54,7 +51,7 @@ export async function createTrip(app: FastifyInstance) {
           destination,
           starts_at,
           ends_at,
-          participant: {
+          participants: {
             createMany: {
               data: [
                 {
