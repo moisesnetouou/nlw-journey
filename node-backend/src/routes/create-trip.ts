@@ -20,6 +20,7 @@ export async function createTrip(app: FastifyInstance) {
         }),
       },
     },
+
     async (request) => {
       const { destination, starts_at, ends_at, owner_name, owner_email } =
         request.body;
@@ -41,6 +42,14 @@ export async function createTrip(app: FastifyInstance) {
           destination,
           starts_at,
           ends_at,
+          participant: {
+            create: {
+              email: owner_email,
+              name: owner_name,
+              is_owner: true,
+              is_confirmed: true,
+            },
+          },
         },
       });
 
