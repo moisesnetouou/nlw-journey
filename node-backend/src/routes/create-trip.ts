@@ -3,6 +3,8 @@ import { ZodTypeProvider } from 'fastify-type-provider-zod';
 import z from 'zod';
 import dayjs from 'dayjs';
 import { prisma } from '../lib/prisma';
+import { getMailClient } from '../lib/mail';
+import nodemailer from 'nodemailer';
 
 export async function createTrip(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
@@ -41,6 +43,23 @@ export async function createTrip(app: FastifyInstance) {
           ends_at,
         },
       });
+
+      const mail = await getMailClient();
+
+      const message = await mail.sendMail({
+        from: {
+          name: 'Equipe plann.er',
+          address: 'oi@plann.er',
+        },
+        to: {
+          name: owner_name,
+          address: owner_email,
+        },
+        subject: 'Testando envio de e-mail',
+        html: `<p>Ola ${owner_name}, sua viagem com o destino ${destination} foi criada com sucesso!</p>`,
+      });
+
+      console.log(nodemailer.getTestMessageUrl(message));
 
       return { tripId: trip.id };
     },

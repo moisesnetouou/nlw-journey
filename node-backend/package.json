@@ -11,6 +11,7 @@
   "devDependencies": {
     "@rocketseat/eslint-config": "^2.2.2",
     "@types/node": "^22.5.4",
+    "@types/nodemailer": "^6.4.15",
     "@typescript-eslint/eslint-plugin": "^8.4.0",
     "@typescript-eslint/parser": "^8.4.0",
     "eslint": "^8.57.0",
@@ -28,6 +29,7 @@
     "dayjs": "^1.11.13",
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
+    "nodemailer": "^6.9.15",
     "zod": "^3.23.8"
   }
 }
